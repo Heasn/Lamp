@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using DotNetty.Buffers;
-using Lamp.Network.Server;
 
 namespace Lamp.Network.KcpLib
 {

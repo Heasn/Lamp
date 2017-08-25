@@ -8,8 +8,7 @@ namespace Lamp.Network.Server
     {
         public override void ChannelRead(IChannelHandlerContext context, object message)
         {
-            //var datagramPacket = (DatagramPacket) message;
-            //kcp.Receive(datagramPacket.Content);
+
         }
 
         public override void ExceptionCaught(IChannelHandlerContext context, Exception exception)

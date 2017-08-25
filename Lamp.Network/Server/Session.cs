@@ -17,7 +17,9 @@ namespace Lamp.Network.Server
 
         public Session(BedRockUdpServer s)
         {
-            m_Kcp = new Kcp(s.Out, null);
+            m_Kcp = new Kcp(s.SendDelegate, null);
+            m_Kcp.NoDelay(1, 10, 2, 1);
+            m_Kcp.WndSize(128, 128);
         }
     }
 }

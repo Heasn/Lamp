@@ -60,13 +60,7 @@ namespace Lamp.Network.Server
             await m_Group.ShutdownGracefullyAsync();
         }
 
-        public void Out(IByteBuffer msg, Kcp kcp, object user)
-        {
-            var packet = new DatagramPacket(msg, (IPEndPoint) user, m_BootstrapChannel.LocalAddress);
-            m_BootstrapChannel.WriteAndFlushAsync(packet);
-        }
-
-        private void SendDelegate(IByteBuffer buf, Kcp kcp, object user)
+        public void SendDelegate(IByteBuffer buf, Kcp kcp, object user)
         {
             var packet = new DatagramPacket(buf, (EndPoint)user, addr );
             m_BootstrapChannel.WriteAndFlushAsync(packet);
