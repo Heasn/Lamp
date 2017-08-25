@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.26730.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lamp.Agent", "Lamp.Agent\Lamp.Agent.csproj", "{00196101-1EEC-4717-A784-02C5AE65CC2E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lamp.Network", "Lamp.Network\Lamp.Network.csproj", "{DCC0C434-5290-4DC8-8A41-17268F782A38}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{00196101-1EEC-4717-A784-02C5AE65CC2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00196101-1EEC-4717-A784-02C5AE65CC2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00196101-1EEC-4717-A784-02C5AE65CC2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCC0C434-5290-4DC8-8A41-17268F782A38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DCC0C434-5290-4DC8-8A41-17268F782A38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DCC0C434-5290-4DC8-8A41-17268F782A38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCC0C434-5290-4DC8-8A41-17268F782A38}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
