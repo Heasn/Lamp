@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices;
 using DotNetty.Buffers;
-using System.Net;
 
-namespace Lamp.Network.KcpLib
+namespace Lamp.Agent.KcpLib
 {
     class Kcp
     {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Lamp.Network
+﻿namespace Lamp.Network.Server
 {
     public static class NetworkOperationCode
     {

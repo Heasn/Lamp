@@ -1,17 +1,23 @@
 ﻿using DotNetty.Buffers;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
-using Lamp.Network.KcpLib;
 using System;
 using System.Net;
+using DotNetty.Common.Utilities;
+using Lamp.Agent.KcpLib;
 
 namespace Lamp.Network.Server
 {
     public class Session
     {
+        public static AttributeKey<Session> SessionIdentity { get; } = AttributeKey<Session>.ValueOf("SessionIdentity");
+
         private Kcp mKcp;
         private IChannel mIChannel;
         private EndPoint mLocalAddress;
+
+
+
 
         private Session()
         {

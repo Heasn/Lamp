@@ -1,10 +1,11 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
 using DotNetty.Buffers;
+using DotNetty.Common.Internal.Logging;
 using DotNetty.Transport.Bootstrapping;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
-using Lamp.Network.KcpLib;
+using Microsoft.Extensions.Logging.Console;
 
 namespace Lamp.Network.Server
 {
@@ -14,16 +15,12 @@ namespace Lamp.Network.Server
         private IChannel mBootstrapChannel;
 
         private volatile bool mRunning;
-        private readonly SessionManager mSessionManager;
 
-        protected abstract void SessionConnectAccept(Session session);
-        protected abstract void SessionConnectRefuse(Session session);
-        protected abstract void SessionDisconnected(Session session);
-        protected abstract void PacketReceived(IByteBuffer buffer, Session session);
+        private readonly int mPort;
 
-        protected BedRockUdpServer()
+        protected BedRockUdpServer(int port)
         {
-            mSessionManager = SessionManager.Create(100);
+            mPort = port;
         }
 
         public async Task Run()
@@ -31,7 +28,7 @@ namespace Lamp.Network.Server
             if (mRunning)
                 return;
 
-            //InternalLoggerFactory.DefaultFactory.AddProvider(new ConsoleLoggerProvider((s, level) => true, false));
+            InternalLoggerFactory.DefaultFactory.AddProvider(new ConsoleLoggerProvider((s, level) => true, false));
 
             mGroup = new MultithreadEventLoopGroup();
 
@@ -44,14 +41,10 @@ namespace Lamp.Network.Server
                 {
                     var pipeline = channel.Pipeline;
 
-                    pipeline.AddLast(new BedRockUdpServerHandler(mSessionManager,
-                        SessionConnectAccept,
-                        SessionDisconnected,
-                        PacketReceived,
-                        SessionConnectRefuse));
+                    pipeline.AddLast(new BedRockUdpServerHandler());
                 }));
 
-            mBootstrapChannel = await bootstrap.BindAsync(8686);
+            mBootstrapChannel = await bootstrap.BindAsync(mPort);
 
             mRunning = true;
         }

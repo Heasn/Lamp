@@ -6,6 +6,8 @@ namespace Lamp.Network
 {
     class SessionManager
     {
+        public static SessionManager Instance { get; } = new SessionManager();
+
         private readonly ConcurrentQueue<int> mSessionIdQueue = new ConcurrentQueue<int>();
         private readonly ConcurrentDictionary<EndPoint, Session> mSessions = new ConcurrentDictionary<EndPoint, Session>();
 

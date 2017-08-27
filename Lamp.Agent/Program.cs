@@ -1,4 +1,5 @@
 ﻿using System;
+using Lamp.Network;
 
 namespace Lamp.Agent
 {
@@ -6,7 +7,10 @@ namespace Lamp.Agent
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var server = new AgentServer();
+            server.Run().Wait();
+            Console.WriteLine("启动成功");
+            Console.ReadKey();
         }
     }
 }
