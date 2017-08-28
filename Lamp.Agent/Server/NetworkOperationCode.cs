@@ -1,4 +1,4 @@
-﻿namespace Lamp.Network.Server
+﻿namespace Lamp.Agent.Server
 {
     public static class NetworkOperationCode
     {

@@ -1,14 +1,13 @@
 ﻿using System;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
-using DotNetty.Buffers;
 
-namespace Lamp.Network.Server
+namespace Lamp.Agent.Server
 {
-    class BedRockUdpServerHandler : ChannelHandlerAdapter,SimpleChannelInboundHandler
+    sealed class LampUdpServerHandler : ChannelHandlerAdapter
     {
 
-        public BedRockUdpServerHandler()
+        public LampUdpServerHandler()
         {
 
         }
@@ -30,17 +29,17 @@ namespace Lamp.Network.Server
                 //用户连入数已达到最大
                 if (sessionId == NetworkOperationCode.MAX_CONN_EXCEED)
                 {
-                    mConnectRefuseAction(session);
+                   
                 }
                 else
                 {
                     ctxAttribute.Set(newsession);
-                    mConnectAcceptAction(session);
+                    //mConnectAcceptAction(session);
                 }
             }
             else
             {
-                session.RecvData(packet.Content);
+                //session.RecvData(packet.Content);
             }
             
         }

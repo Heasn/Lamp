@@ -1,33 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using DotNetty.Buffers;
-using Lamp.Network.Server;
+﻿using System.Threading.Tasks;
+using DotNetty.Common.Internal.Logging;
+using Lamp.Agent.Server;
 
 namespace Lamp.Agent
 {
-    class AgentServer : Lamp.Network.Server.BedRockUdpServer
+    class AgentServer
     {
-        protected override void SessionConnectAccept(Session session)
+        private readonly LampTcpServer mTcpServer;
+        private readonly LampUdpServer mUdpServer;
+
+        private readonly IInternalLogger mLogger = InternalLoggerFactory.GetInstance<AgentServer>();
+
+        public AgentServer(int port)
         {
-            throw new NotImplementedException();
+            mTcpServer = new LampTcpServer(port);
+            mUdpServer = new LampUdpServer(port);
         }
 
-        protected override void SessionConnectRefuse(Session session)
+        public async Task Run()
         {
-            throw new NotImplementedException();
+            mLogger.Info("正在启动TCPServer");
+            await mTcpServer.Run();
+            mLogger.Info("TCPServer启动完成");
+
+            mLogger.Info("正在启动UDPServer");
+            await mUdpServer.Run();
+            mLogger.Info("UDPServer启动完成");
         }
 
-        protected override void SessionDisconnected(Session session)
+        public async Task Stop()
         {
-            throw new NotImplementedException();
+            mLogger.Info("正在停止TCPServer");
+            await mTcpServer.Stop();
+            mLogger.Info("TCPServer停止完成");
+
+            mLogger.Info("正在停止UDPServer");
+            await mUdpServer.Stop();
+            mLogger.Info("UDPServer停止完成");
         }
-
-        protected override void PacketReceived(IByteBuffer buffer, Session session)
-        {
-            throw new NotImplementedException();
-        }
-
-
     }
 }

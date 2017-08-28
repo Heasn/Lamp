@@ -1,8 +1,8 @@
-﻿using Lamp.Network.Server;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Net;
+using Lamp.Agent.Server;
 
-namespace Lamp.Network
+namespace Lamp.Agent
 {
     class SessionManager
     {
@@ -13,24 +13,10 @@ namespace Lamp.Network
 
         private SessionManager()
         {
-
-        }
-
-        /// <summary>
-        /// 创建一个<see cref="SessionManager"/>
-        /// </summary>
-        /// <param name="peerCapcity">连接点容量</param>
-        /// <returns></returns>
-        public static SessionManager Create(uint peerCapcity)
-        {
-            var sm = new SessionManager();
-            
-            for (var sessionId = 0; sessionId <= peerCapcity; sessionId++)
+            for (var sessionId = 0; sessionId <= 100; sessionId++)
             {
-                sm.mSessionIdQueue.Enqueue(sessionId);
+                mSessionIdQueue.Enqueue(sessionId);
             }
-
-            return sm;
         }
 
         /// <summary>
@@ -44,7 +30,9 @@ namespace Lamp.Network
                 return NetworkOperationCode.MAX_CONN_EXCEED;
             }
 
-            return mSessionIdQueue.TryDequeue(out var newPeerId) ? newPeerId : NetworkOperationCode.MAX_CONN_EXCEED;
+            return mSessionIdQueue.TryDequeue(out var newPeerId) 
+                ? newPeerId 
+                : NetworkOperationCode.MAX_CONN_EXCEED;
         }
 
         /// <summary>

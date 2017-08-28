@@ -12,6 +12,7 @@
     <PackageReference Include="DotNetty.Handlers" Version="0.4.6" />
     <PackageReference Include="DotNetty.Transport" Version="0.4.6" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.0.0" />
+    <PackageReference Include="System.Security.Cryptography.Cng" Version="4.4.0" />
   </ItemGroup>
 
 </Project>

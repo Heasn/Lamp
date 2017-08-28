@@ -1,15 +1,13 @@
-﻿using System.Net;
-using System.Threading.Tasks;
-using DotNetty.Buffers;
-using DotNetty.Common.Internal.Logging;
+﻿using DotNetty.Common.Internal.Logging;
 using DotNetty.Transport.Bootstrapping;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
 using Microsoft.Extensions.Logging.Console;
+using System.Threading.Tasks;
 
-namespace Lamp.Network.Server
+namespace Lamp.Agent.Server
 {
-    public abstract class BedRockUdpServer
+    public sealed class LampUdpServer
     {
         private IEventLoopGroup mGroup;
         private IChannel mBootstrapChannel;
@@ -18,7 +16,7 @@ namespace Lamp.Network.Server
 
         private readonly int mPort;
 
-        protected BedRockUdpServer(int port)
+        public LampUdpServer(int port)
         {
             mPort = port;
         }
@@ -27,8 +25,6 @@ namespace Lamp.Network.Server
         {
             if (mRunning)
                 return;
-
-            InternalLoggerFactory.DefaultFactory.AddProvider(new ConsoleLoggerProvider((s, level) => true, false));
 
             mGroup = new MultithreadEventLoopGroup();
 
@@ -41,7 +37,7 @@ namespace Lamp.Network.Server
                 {
                     var pipeline = channel.Pipeline;
 
-                    pipeline.AddLast(new BedRockUdpServerHandler());
+                    pipeline.AddLast(new LampUdpServerHandler());
                 }));
 
             mBootstrapChannel = await bootstrap.BindAsync(mPort);

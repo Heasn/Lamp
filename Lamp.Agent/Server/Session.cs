@@ -1,12 +1,11 @@
-﻿using DotNetty.Buffers;
+﻿using System.Net;
+using DotNetty.Buffers;
+using DotNetty.Common.Utilities;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
-using System;
-using System.Net;
-using DotNetty.Common.Utilities;
 using Lamp.Agent.KcpLib;
 
-namespace Lamp.Network.Server
+namespace Lamp.Agent.Server
 {
     public class Session
     {
@@ -15,9 +14,6 @@ namespace Lamp.Network.Server
         private Kcp mKcp;
         private IChannel mIChannel;
         private EndPoint mLocalAddress;
-
-
-
 
         private Session()
         {
