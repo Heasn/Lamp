@@ -8,6 +8,7 @@ using Lamp.Agent.Crypto;
 using Lamp.Agent.Crypto.RSA;
 using Microsoft.Extensions.Logging.Console;
 using System.Diagnostics;
+using DotNetty.Buffers;
 using Lamp.Agent.Crypto.AES;
 
 namespace Lamp.Agent
@@ -27,24 +28,33 @@ namespace Lamp.Agent
 
             byte[] key = new byte[16];
             byte[] iv = new byte[16];
+            byte[] plain = Encoding.UTF8.GetBytes("123456");
+            byte[] encoded = new byte[plain.Length];
+            byte[] decoded = new byte[plain.Length];
 
             using (var g = RandomNumberGenerator.Create())
             {
                 g.GetNonZeroBytes(key);
                 g.GetNonZeroBytes(iv);
             }
+                var buf = PooledByteBufferAllocator.Default.Buffer();
 
-            var plain = Encoding.UTF8.GetBytes("123456");
-            var ended = new byte[plain.Length];
+            buf.WriteBytes(plain);
 
-            AESCrypto a = new AESCrypto(key, iv);
+            var aes = new AescfbCrypto(key, iv);
+            var stopWatch = new Stopwatch();
 
-            var stop = new Stopwatch();
-            stop.Start();
-            a.Encrypt(plain, plain.Length, ended);
-            stop.Stop();
+            stopWatch.Start();
+            aes.Encrypt(buf);
+            stopWatch.Stop();
 
-            Console.WriteLine(BitConverter.ToString(ended) + "    用时：" + stop.Elapsed);
+            buf.GetBytes(buf.ReaderIndex, encoded);
+            Console.WriteLine(BitConverter.ToString(encoded)+"  "+stopWatch.Elapsed);
+
+            aes.Encrypt(buf);
+            buf.GetBytes(buf.ReaderIndex, decoded );
+
+            Console.WriteLine(Encoding.UTF8.GetString(decoded ));
 
             Console.ReadLine();
         }
