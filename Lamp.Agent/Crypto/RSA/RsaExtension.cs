@@ -1,20 +1,48 @@
-﻿using System;
+﻿#region 文件描述
+
+// 开发者：陈柏宇
+// 解决方案：Lamp
+// 工程：Lamp.Agent
+// 文件名：RsaExtension.cs
+// 创建日期：2017-08-28
+
+#endregion
+
+using System;
 using System.Security.Cryptography;
 using System.Xml;
 
 namespace Lamp.Agent.Crypto.RSA
 {
-    static class RsaExtension
+    internal static class RsaExtension
     {
+        public static void ExportToXmlString(this System.Security.Cryptography.RSA rsa, bool includePrivateParameters)
+        {
+            var parameters = rsa.ExportParameters(includePrivateParameters);
+
+            var xmlSettings = new XmlWriterSettings {Indent = true};
+
+            var xmlContent = includePrivateParameters
+                ? $"<RSAKeyValue><Modulus>{Convert.ToBase64String(parameters.Modulus)}</Modulus><Exponent>{Convert.ToBase64String(parameters.Exponent)}</Exponent><P>{Convert.ToBase64String(parameters.P)}</P><Q>{Convert.ToBase64String(parameters.Q)}</Q><DP>{Convert.ToBase64String(parameters.DP)}</DP><DQ>{Convert.ToBase64String(parameters.DQ)}</DQ><InverseQ>{Convert.ToBase64String(parameters.InverseQ)}</InverseQ><D>{Convert.ToBase64String(parameters.D)}</D></RSAKeyValue>"
+                : $"<RSAKeyValue><Modulus>{Convert.ToBase64String(parameters.Modulus)}</Modulus><Exponent>{Convert.ToBase64String(parameters.Exponent)}</Exponent></RSAKeyValue>";
+
+            var xml = new XmlDocument();
+            xml.LoadXml(xmlContent);
+
+            using (var xmlWriter =
+                XmlWriter.Create($"{(includePrivateParameters ? "privateKey.xml" : "publicKey.xml")}", xmlSettings))
+            {
+                xml.WriteTo(xmlWriter);
+            }
+        }
+
         public static void ImportFromXmlString(this System.Security.Cryptography.RSA rsa, string filename)
         {
             var parameters = new RSAParameters();
             var xmlDoc = new XmlDocument();
             xmlDoc.Load(filename);
             if (xmlDoc.DocumentElement.Name.Equals("RSAKeyValue"))
-            {
                 foreach (XmlNode node in xmlDoc.DocumentElement.ChildNodes)
-                {
                     switch (node.Name)
                     {
                         case "Modulus":
@@ -42,33 +70,10 @@ namespace Lamp.Agent.Crypto.RSA
                             parameters.D = Convert.FromBase64String(node.InnerText);
                             break;
                     }
-                }
-            }
             else
-            {
                 throw new Exception("Invalid XML RSA key.");
-            }
 
             rsa.ImportParameters(parameters);
-        }
-
-        public static void ExportToXmlString(this System.Security.Cryptography.RSA rsa, bool includePrivateParameters)
-        {
-            var parameters = rsa.ExportParameters(includePrivateParameters);
-
-            var xmlSettings = new XmlWriterSettings { Indent = true };
-
-            var xmlContent = includePrivateParameters
-                ? $"<RSAKeyValue><Modulus>{Convert.ToBase64String(parameters.Modulus)}</Modulus><Exponent>{Convert.ToBase64String(parameters.Exponent)}</Exponent><P>{Convert.ToBase64String(parameters.P)}</P><Q>{Convert.ToBase64String(parameters.Q)}</Q><DP>{Convert.ToBase64String(parameters.DP)}</DP><DQ>{Convert.ToBase64String(parameters.DQ)}</DQ><InverseQ>{Convert.ToBase64String(parameters.InverseQ)}</InverseQ><D>{Convert.ToBase64String(parameters.D)}</D></RSAKeyValue>"
-                : $"<RSAKeyValue><Modulus>{Convert.ToBase64String(parameters.Modulus)}</Modulus><Exponent>{Convert.ToBase64String(parameters.Exponent)}</Exponent></RSAKeyValue>";
-
-            var xml = new XmlDocument();
-            xml.LoadXml(xmlContent);
-
-            using (var xmlWriter = XmlWriter.Create($"{(includePrivateParameters ? "privateKey.xml" : "publicKey.xml")}", xmlSettings))
-            {
-                xml.WriteTo(xmlWriter);
-            }
         }
     }
 }

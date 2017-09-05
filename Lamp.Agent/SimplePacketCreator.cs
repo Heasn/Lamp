@@ -1,21 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿#region 文件描述
+
+// 开发者：陈柏宇
+// 解决方案：Lamp
+// 工程：Lamp.Agent
+// 文件名：SimplePacketCreator.cs
+// 创建日期：2017-08-28
+
+#endregion
+
 using DotNetty.Buffers;
 
 namespace Lamp.Agent
 {
-    class SimplePacketCreator
+    internal class SimplePacketCreator
     {
         /// <summary>
-        /// 握手通过
+        ///     握手通过
         /// </summary>
         /// <param name="buffer"></param>
         /// <param name="sessionId">会话ID</param>
         /// <param name="randomKey">随机Key</param>
         /// <param name="majorVersion">主版本号</param>
         /// <param name="subVersion">副版本号</param>
-        public static void HandshakeAccept(IByteBuffer buffer, int sessionId, int randomKey, byte majorVersion, byte subVersion)
+        public static void HandshakeAccept(IByteBuffer buffer, int sessionId, int randomKey, byte majorVersion,
+            byte subVersion)
         {
             buffer.WriteBoolean(true);
             buffer.WriteInt(sessionId);

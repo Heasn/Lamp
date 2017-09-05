@@ -1,62 +1,38 @@
-﻿using System;
-using System.IO;
-using System.Security.Cryptography;
-using System.Text;
-using System.Xml;
+﻿#region 文件描述
+
+// 开发者：陈柏宇
+// 解决方案：Lamp
+// 工程：Lamp.Agent
+// 文件名：Program.cs
+// 创建日期：2017-09-01
+
+#endregion
+
+using System;
 using DotNetty.Common.Internal.Logging;
-using Lamp.Agent.Crypto;
-using Lamp.Agent.Crypto.RSA;
-using Microsoft.Extensions.Logging.Console;
-using System.Diagnostics;
-using DotNetty.Buffers;
-using Lamp.Agent.Crypto.AES;
+using Lamp.Utilities;
+using Microsoft.Extensions.Logging;
 
 namespace Lamp.Agent
 {
-    class Program
+    internal class Program
     {
-        private static readonly IInternalLogger Logger = InternalLoggerFactory.GetInstance<Program>();
+        private static readonly ILogger logger = ApplicationLogging.CreateLogger<Program>();
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            //InternalLoggerFactory.DefaultFactory.AddProvider(new ConsoleLoggerProvider((s, level) => true, false));
+            InternalLoggerFactory.DefaultFactory = ApplicationLogging.LoggerFactory;
 
-            //var server = new AgentServer(8686);
-            //server.Run().Wait();
-
-            //Logger.Info("服务器启动完成");
-
-            byte[] key = new byte[16];
-            byte[] iv = new byte[16];
-            byte[] plain = Encoding.UTF8.GetBytes("123456");
-            byte[] encoded = new byte[plain.Length];
-            byte[] decoded = new byte[plain.Length];
-
-            using (var g = RandomNumberGenerator.Create())
+            using (logger.BeginScope(nameof(Main)))
             {
-                g.GetNonZeroBytes(key);
-                g.GetNonZeroBytes(iv);
+                logger.LogInformation("开始启动服务器");
+                var server = new AgentServer(8686);
+                server.Run().Wait();
+                logger.LogInformation("服务器启动完成");
             }
-                var buf = PooledByteBufferAllocator.Default.Buffer();
-
-            buf.WriteBytes(plain);
-
-            var aes = new AescfbCrypto(key, iv);
-            var stopWatch = new Stopwatch();
-
-            stopWatch.Start();
-            aes.Encrypt(buf);
-            stopWatch.Stop();
-
-            buf.GetBytes(buf.ReaderIndex, encoded);
-            Console.WriteLine(BitConverter.ToString(encoded)+"  "+stopWatch.Elapsed);
-
-            aes.Encrypt(buf);
-            buf.GetBytes(buf.ReaderIndex, decoded );
-
-            Console.WriteLine(Encoding.UTF8.GetString(decoded ));
 
             Console.ReadLine();
+            logger.LogInformation("正在关闭服务器");
         }
     }
 }

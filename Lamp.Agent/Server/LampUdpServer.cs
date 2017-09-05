@@ -1,20 +1,27 @@
-﻿using DotNetty.Common.Internal.Logging;
+﻿#region 文件描述
+
+// 开发者：陈柏宇
+// 解决方案：Lamp
+// 工程：Lamp.Agent
+// 文件名：LampUdpServer.cs
+// 创建日期：2017-08-28
+
+#endregion
+
+using System.Threading.Tasks;
 using DotNetty.Transport.Bootstrapping;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
-using Microsoft.Extensions.Logging.Console;
-using System.Threading.Tasks;
 
 namespace Lamp.Agent.Server
 {
     public sealed class LampUdpServer
     {
-        private IEventLoopGroup mGroup;
+        private readonly int mPort;
         private IChannel mBootstrapChannel;
+        private IEventLoopGroup mGroup;
 
         private volatile bool mRunning;
-
-        private readonly int mPort;
 
         public LampUdpServer(int port)
         {
@@ -58,6 +65,5 @@ namespace Lamp.Agent.Server
 
             mRunning = false;
         }
-
     }
 }

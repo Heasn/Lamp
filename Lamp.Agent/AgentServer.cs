@@ -1,15 +1,24 @@
-﻿using System.Threading.Tasks;
+﻿#region 文件描述
+
+// 开发者：陈柏宇
+// 解决方案：Lamp
+// 工程：Lamp.Agent
+// 文件名：AgentServer.cs
+// 创建日期：2017-08-28
+
+#endregion
+
+using System.Threading.Tasks;
 using DotNetty.Common.Internal.Logging;
 using Lamp.Agent.Server;
 
 namespace Lamp.Agent
 {
-    class AgentServer
+    internal class AgentServer
     {
+        private readonly IInternalLogger mLogger = InternalLoggerFactory.GetInstance<AgentServer>();
         private readonly LampTcpServer mTcpServer;
         private readonly LampUdpServer mUdpServer;
-
-        private readonly IInternalLogger mLogger = InternalLoggerFactory.GetInstance<AgentServer>();
 
         public AgentServer(int port)
         {

@@ -1,24 +1,44 @@
-﻿using System.Net;
+﻿#region 文件描述
+
+// 开发者：陈柏宇
+// 解决方案：Lamp
+// 工程：Lamp.Agent
+// 文件名：Session.cs
+// 创建日期：2017-08-28
+
+#endregion
+
+using System.Net;
 using DotNetty.Buffers;
 using DotNetty.Common.Utilities;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
+using Lamp.Agent.Crypto.AES;
 using Lamp.Agent.KcpLib;
+using Lamp.Utilities;
 
 namespace Lamp.Agent.Server
 {
     public class Session
     {
-        public static AttributeKey<Session> SessionIdentity { get; } = AttributeKey<Session>.ValueOf("SessionIdentity");
+        private AesCryptor mCryptor;
+        private IChannel mIChannel;
 
         private Kcp mKcp;
-        private IChannel mIChannel;
-        private EndPoint mLocalAddress;
 
         private Session()
         {
+            var key = new byte[AesBlock.BLOCKSIZE];
+            var iv = new byte[AesBlock.BLOCKSIZE];
 
+            Randomizer.GetBytes(key);
+            Randomizer.GetBytes(iv);
+
+            var block = new AesBlock(key);
+            mCryptor = new AesCryptor(block, iv);
         }
+
+        public static AttributeKey<Session> SessionIdentity { get; } = AttributeKey<Session>.ValueOf("SessionIdentity");
 
         public static Session Create(IChannel channel, EndPoint endPoint, int sessionId)
         {
@@ -40,7 +60,7 @@ namespace Lamp.Agent.Server
             return session;
         }
 
-        public void RecvData(IByteBuffer buf,out IByteBuffer outBuffer)
+        public void RecvData(IByteBuffer buf, out IByteBuffer outBuffer)
         {
             buf = buf.WithOrder(ByteOrder.LittleEndian);
 
@@ -49,12 +69,9 @@ namespace Lamp.Agent.Server
             outBuffer = PooledByteBufferAllocator.Default.Buffer().WithOrder(ByteOrder.LittleEndian);
 
             for (var size = mKcp.PeekSize(); size > 0; size = mKcp.PeekSize())
-            {
                 if (mKcp.Receive(outBuffer) > 0)
                 {
-                    
                 }
-            }
         }
     }
 }

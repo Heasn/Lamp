@@ -1,28 +1,36 @@
-﻿using DotNetty.Buffers;
+﻿#region 文件描述
+
+// 开发者：陈柏宇
+// 解决方案：Lamp
+// 工程：Lamp.Agent
+// 文件名：Segment.cs
+// 创建日期：2017-08-27
+
+#endregion
+
+using DotNetty.Buffers;
 
 namespace Lamp.Agent.KcpLib
 {
-    class Segment
+    internal class Segment
     {
-        public int Conv;
         public byte Cmd;
+        public int Conv;
+        public IByteBuffer Data;
+        public int Fastack;
         public int Frg;
-        public int Wnd;
-        public int Ts;
-        public int Sn;
-        public int Una;
         public int Resendts;
         public int Rto;
-        public int Fastack;
+        public int Sn;
+        public int Ts;
+        public int Una;
+        public int Wnd;
         public int Xmit;
-        public IByteBuffer Data;
 
         public Segment(int size)
         {
             if (size > 0)
-            {
                 Data = PooledByteBufferAllocator.Default.Buffer(size);
-            }
         }
 
         public int Encode(IByteBuffer buf)
@@ -44,10 +52,7 @@ namespace Lamp.Agent.KcpLib
         public void Release()
         {
             if (Data != null && Data.ReferenceCount > 0)
-            {
                 Data.Release(Data.ReferenceCount);
-            }
         }
     }
 }
-

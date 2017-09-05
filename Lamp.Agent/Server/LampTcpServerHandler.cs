@@ -1,12 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿#region 文件描述
+
+// 开发者：陈柏宇
+// 解决方案：Lamp
+// 工程：Lamp.Agent
+// 文件名：LampTcpServerHandler.cs
+// 创建日期：2017-08-28
+
+#endregion
+
+using System;
 using DotNetty.Buffers;
 using DotNetty.Transport.Channels;
 
 namespace Lamp.Agent.Server
 {
-    sealed class LampTcpServerHandler: ChannelHandlerAdapter
+    internal sealed class LampTcpServerHandler : ChannelHandlerAdapter
     {
         public override void ChannelActive(IChannelHandlerContext context)
         {
@@ -35,10 +43,6 @@ namespace Lamp.Agent.Server
                 }
 
                 context.WriteAndFlushAsync(buffer);
-            }
-            else
-            {
-                //TODO:重连
             }
         }
 

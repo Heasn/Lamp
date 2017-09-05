@@ -1,24 +1,31 @@
-﻿using System;
+﻿#region 文件描述
+
+// 开发者：陈柏宇
+// 解决方案：Lamp
+// 工程：Lamp.Agent
+// 文件名：LampTcpServer.cs
+// 创建日期：2017-08-28
+
+#endregion
+
+using System;
 using System.Threading.Tasks;
 using DotNetty.Codecs;
-using DotNetty.Common.Internal.Logging;
 using DotNetty.Handlers.Logging;
 using DotNetty.Transport.Bootstrapping;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
-using Microsoft.Extensions.Logging.Console;
 
 namespace Lamp.Agent.Server
 {
     public sealed class LampTcpServer
     {
-        private IEventLoopGroup mBossGroup;
-        private IEventLoopGroup mWorkerGroup;
+        private readonly int mPort;
         private IChannel mBootstrapChannel;
+        private IEventLoopGroup mBossGroup;
 
         private volatile bool mRunning;
-
-        private readonly int mPort;
+        private IEventLoopGroup mWorkerGroup;
 
         public LampTcpServer(int port)
         {
@@ -41,7 +48,7 @@ namespace Lamp.Agent.Server
                 .Handler(new LoggingHandler("SRV-LSTN"))
                 .ChildHandler(new ActionChannelInitializer<ISocketChannel>(channel =>
                 {
-                    IChannelPipeline pipeline = channel.Pipeline;
+                    var pipeline = channel.Pipeline;
 
                     pipeline.AddLast(new LoggingHandler("SRV-CONN"));
                     pipeline.AddLast("framing-enc", new LengthFieldPrepender(2));
