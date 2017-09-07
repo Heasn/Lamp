@@ -1,6 +1,6 @@
 ﻿#region 文件描述
 
-// 开发者：陈柏宇
+// 开发者：CHENBAIYU
 // 解决方案：Lamp
 // 工程：Lamp.Agent
 // 文件名：Segment.cs

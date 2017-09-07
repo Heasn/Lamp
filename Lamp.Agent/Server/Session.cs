@@ -1,6 +1,6 @@
 ﻿#region 文件描述
 
-// 开发者：陈柏宇
+// 开发者：CHENBAIYU
 // 解决方案：Lamp
 // 工程：Lamp.Agent
 // 文件名：Session.cs
@@ -13,9 +13,9 @@ using DotNetty.Buffers;
 using DotNetty.Common.Utilities;
 using DotNetty.Transport.Channels;
 using DotNetty.Transport.Channels.Sockets;
-using Lamp.Agent.Crypto.AES;
 using Lamp.Agent.KcpLib;
 using Lamp.Utilities;
+using Lamp.Utilities.Crypto.AES;
 
 namespace Lamp.Agent.Server
 {

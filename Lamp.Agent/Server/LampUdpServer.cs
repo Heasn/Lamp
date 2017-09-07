@@ -1,6 +1,6 @@
 ﻿#region 文件描述
 
-// 开发者：陈柏宇
+// 开发者：CHENBAIYU
 // 解决方案：Lamp
 // 工程：Lamp.Agent
 // 文件名：LampUdpServer.cs
@@ -17,16 +17,16 @@ namespace Lamp.Agent.Server
 {
     public sealed class LampUdpServer
     {
-        private readonly int mPort;
         private IChannel mBootstrapChannel;
         private IEventLoopGroup mGroup;
-
         private volatile bool mRunning;
 
         public LampUdpServer(int port)
         {
-            mPort = port;
+            Port = port;
         }
+
+        public int Port { get; }
 
         public async Task Run()
         {
@@ -47,7 +47,7 @@ namespace Lamp.Agent.Server
                     pipeline.AddLast(new LampUdpServerHandler());
                 }));
 
-            mBootstrapChannel = await bootstrap.BindAsync(mPort);
+            mBootstrapChannel = await bootstrap.BindAsync(Port);
 
             mRunning = true;
         }

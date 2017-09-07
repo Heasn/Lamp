@@ -1,6 +1,6 @@
 ﻿#region 文件描述
 
-// 开发者：陈柏宇
+// 开发者：CHENBAIYU
 // 解决方案：Lamp
 // 工程：Lamp.Agent
 // 文件名：LampTcpServer.cs
@@ -20,17 +20,17 @@ namespace Lamp.Agent.Server
 {
     public sealed class LampTcpServer
     {
-        private readonly int mPort;
         private IChannel mBootstrapChannel;
         private IEventLoopGroup mBossGroup;
-
         private volatile bool mRunning;
         private IEventLoopGroup mWorkerGroup;
 
         public LampTcpServer(int port)
         {
-            mPort = port;
+            Port = port;
         }
+
+        public int Port { get; }
 
         public async Task Run()
         {
@@ -54,10 +54,10 @@ namespace Lamp.Agent.Server
                     pipeline.AddLast("framing-enc", new LengthFieldPrepender(2));
                     pipeline.AddLast("framing-dec", new LengthFieldBasedFrameDecoder(ushort.MaxValue, 0, 2, 0, 2));
 
-                    pipeline.AddLast("echo", new LampTcpServerHandler());
+                    pipeline.AddLast("handler", new LampTcpServerHandler());
                 }));
 
-            mBootstrapChannel = await bootstrap.BindAsync(mPort);
+            mBootstrapChannel = await bootstrap.BindAsync(Port);
 
             mRunning = true;
         }

@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lamp.Agent", "Lamp.Agent\Lamp.Agent.csproj", "{00196101-1EEC-4717-A784-02C5AE65CC2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lamp.Utilities", "Lamp.Utilities\Lamp.Utilities.csproj", "{A18834E9-A8BA-49B6-A665-B8F945751326}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lamp.Utilities", "Lamp.Utilities\Lamp.Utilities.csproj", "{A18834E9-A8BA-49B6-A665-B8F945751326}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lamp.UniversalAccountPlatform", "Lamp.UniversalAccountPlatform\Lamp.UniversalAccountPlatform.csproj", "{9B85C245-719C-409C-AA2E-5265048FC793}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{A18834E9-A8BA-49B6-A665-B8F945751326}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A18834E9-A8BA-49B6-A665-B8F945751326}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A18834E9-A8BA-49B6-A665-B8F945751326}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B85C245-719C-409C-AA2E-5265048FC793}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B85C245-719C-409C-AA2E-5265048FC793}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B85C245-719C-409C-AA2E-5265048FC793}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B85C245-719C-409C-AA2E-5265048FC793}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

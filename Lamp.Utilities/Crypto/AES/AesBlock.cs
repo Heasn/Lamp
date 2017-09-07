@@ -1,22 +1,22 @@
 ﻿#region 文件描述
 
-// 开发者：陈柏宇
+// 开发者：CHENBAIYU
 // 解决方案：Lamp
-// 工程：Lamp.Agent
+// 工程：Lamp.Utilities
 // 文件名：AesBlock.cs
-// 创建日期：2017-09-02
+// 创建日期：2017-09-05
 
 #endregion
 
 using System;
 
-namespace Lamp.Agent.Crypto.AES
+namespace Lamp.Utilities.Crypto.AES
 {
-    internal class AesBlock
+    public class AesBlock
     {
         public const int BLOCKSIZE = 16;
-        private readonly uint[] mDecKey;
 
+        private readonly uint[] mDecKey;
         private readonly uint[] mEncKey;
 
         public AesBlock(byte[] key)

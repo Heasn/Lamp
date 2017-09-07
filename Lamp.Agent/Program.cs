@@ -1,6 +1,6 @@
 ﻿#region 文件描述
 
-// 开发者：陈柏宇
+// 开发者：CHENBAIYU
 // 解决方案：Lamp
 // 工程：Lamp.Agent
 // 文件名：Program.cs
@@ -23,13 +23,10 @@ namespace Lamp.Agent
         {
             InternalLoggerFactory.DefaultFactory = ApplicationLogging.LoggerFactory;
 
-            using (logger.BeginScope(nameof(Main)))
-            {
-                logger.LogInformation("开始启动服务器");
-                var server = new AgentServer(8686);
-                server.Run().Wait();
-                logger.LogInformation("服务器启动完成");
-            }
+            logger.LogInformation("开始启动服务器");
+            var server = new AgentServer(8686);
+            server.Run().Wait();
+            logger.LogInformation("服务器启动完成");
 
             Console.ReadLine();
             logger.LogInformation("正在关闭服务器");

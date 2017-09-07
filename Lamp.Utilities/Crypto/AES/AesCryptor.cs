@@ -1,19 +1,19 @@
 ﻿#region 文件描述
 
-// 开发者：陈柏宇
+// 开发者：CHENBAIYU
 // 解决方案：Lamp
-// 工程：Lamp.Agent
+// 工程：Lamp.Utilities
 // 文件名：AesCryptor.cs
-// 创建日期：2017-09-02
+// 创建日期：2017-09-05
 
 #endregion
 
 using System;
 using System.Runtime.CompilerServices;
 
-namespace Lamp.Agent.Crypto.AES
+namespace Lamp.Utilities.Crypto.AES
 {
-    internal class AesCryptor
+    public class AesCryptor
     {
         private AesBlockStruct mBlockStruct;
 

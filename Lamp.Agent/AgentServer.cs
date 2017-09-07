@@ -1,6 +1,6 @@
 ﻿#region 文件描述
 
-// 开发者：陈柏宇
+// 开发者：CHENBAIYU
 // 解决方案：Lamp
 // 工程：Lamp.Agent
 // 文件名：AgentServer.cs
@@ -9,14 +9,15 @@
 #endregion
 
 using System.Threading.Tasks;
-using DotNetty.Common.Internal.Logging;
 using Lamp.Agent.Server;
+using Lamp.Utilities;
+using Microsoft.Extensions.Logging;
 
 namespace Lamp.Agent
 {
     internal class AgentServer
     {
-        private readonly IInternalLogger mLogger = InternalLoggerFactory.GetInstance<AgentServer>();
+        private readonly ILogger mLogger = ApplicationLogging.CreateLogger<AgentServer>();
         private readonly LampTcpServer mTcpServer;
         private readonly LampUdpServer mUdpServer;
 
@@ -28,24 +29,24 @@ namespace Lamp.Agent
 
         public async Task Run()
         {
-            mLogger.Info("正在启动TCPServer");
+            mLogger.LogInformation("正在启动TCPServer");
             await mTcpServer.Run();
-            mLogger.Info("TCPServer启动完成");
+            mLogger.LogInformation($"TCPServer启动完成，监听端口：{mTcpServer.Port}");
 
-            mLogger.Info("正在启动UDPServer");
+            mLogger.LogInformation("正在启动UDPServer");
             await mUdpServer.Run();
-            mLogger.Info("UDPServer启动完成");
+            mLogger.LogInformation($"UDPServer启动完成，绑定地址：{mUdpServer.Port}");
         }
 
         public async Task Stop()
         {
-            mLogger.Info("正在停止TCPServer");
+            mLogger.LogInformation("正在停止TCPServer");
             await mTcpServer.Stop();
-            mLogger.Info("TCPServer停止完成");
+            mLogger.LogInformation("TCPServer停止完成");
 
-            mLogger.Info("正在停止UDPServer");
+            mLogger.LogInformation("正在停止UDPServer");
             await mUdpServer.Stop();
-            mLogger.Info("UDPServer停止完成");
+            mLogger.LogInformation("UDPServer停止完成");
         }
     }
 }

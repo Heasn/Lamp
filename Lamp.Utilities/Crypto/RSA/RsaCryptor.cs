@@ -1,24 +1,24 @@
 ﻿#region 文件描述
 
-// 开发者：陈柏宇
+// 开发者：CHENBAIYU
 // 解决方案：Lamp
-// 工程：Lamp.Agent
+// 工程：Lamp.Utilities
 // 文件名：RsaCryptor.cs
-// 创建日期：2017-08-28
+// 创建日期：2017-09-05
 
 #endregion
 
 using System.Security.Cryptography;
 
-namespace Lamp.Agent.Crypto.RSA
+namespace Lamp.Utilities.Crypto.RSA
 {
-    internal static class RsaCryptor
+    public static class RsaCryptor
     {
         private static readonly System.Security.Cryptography.RSA cryptor = System.Security.Cryptography.RSA.Create();
 
         static RsaCryptor()
         {
-            cryptor.ImportFromXmlString("privateKey.xml");
+            cryptor.ImportFromXmlString("key.xml");
         }
 
         public static byte[] Decrypt(byte[] data)
